@@ -9,13 +9,6 @@ function setHeader (value) {
 	myHeading.textContent = value;
 }
 
-function readDropdown (argument) {
-	var e = document.getElementById("form1");
-	var count = e.options[e.selectedIndex].text;
-	var myHeading1 = document.querySelector('h2');
-	myHeading1.textContent = count;
-}
-
 function fillCanvas (a) {
 	var depth = 490; var leftMost = 100; var rightMost = 1000; var height = 300; var unitLen = (rightMost - leftMost) / 14;
 	var ctx = document.getElementById("animation").getContext("2d");
@@ -83,9 +76,7 @@ function resetCanvas (a) {
 /*to change the text of button*/
 function startExecution (el) {
 	if (el.innerHTML == 'Start') {
-		var e = document.getElementById("dropdown");
-		var entry = e.options[e.selectedIndex].value;
-		resetCanvas(zeroArray(parseInt(entry)));
+		resetCanvas(zeroArray(readDropdown()));
 		//startAnimation
 		el.innerHTML = 'Pause';
 	} else if (el.innerHTML == 'Pause') {
@@ -105,4 +96,25 @@ function zeroArray (length) {
 	return a;
 }
 
+function readDropdown(argument) {
+	var e = document.getElementById("dropdown");
+	var entry = e.options[e.selectedIndex].value;
+	return parseInt(entry);
+}
 
+function hanoi (count, src, target, via, queue, array) {
+	if (count == 0) return;
+	hanoi(count - 1, src, via, target);
+	move(src, target, queue, array);
+	hanoi(count - 1, via, target, src);
+}
+
+function move (src, target, queue, array) {
+	for (var i = Things.length - 1; i >= 0; i--) {
+		if (array[i] == src) { //it means that the element is in src column
+			array[i] = target;
+			queue.enqueue(array.slice());
+			break;
+		}
+	}
+}
