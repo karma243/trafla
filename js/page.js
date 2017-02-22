@@ -80,7 +80,10 @@ function startExecution (el) {
 		var zeros = zeroArray(count)
 		resetCanvas(zeros);
 		//startAnimation
-		hanoi(count, 0, 2, 1, new Queue(), zeros);
+		var queue = new Queue();
+		queue.enqueue(zeros.slice());
+		hanoi(count, 0, 2, 1, queue, zeros);
+		dequeueAndShow(queue);
 		el.innerHTML = 'Pause';
 	} else if (el.innerHTML == 'Pause') {
 		//resume animation
@@ -118,10 +121,17 @@ function swap(src, target, a, queue) {
 		if (a[i] == src) { //it means that the element is in src column
 			a[i] = target;
 			//how to pause it here??
-			resetCanvas(a.slice());
 			queue.enqueue(a.slice());
 			break;
 		}
 	}
-	console.log(a) //will not print the first move
+}
+
+function dequeueAndShow (queue) {
+	//todo: animation. tested with debugger, ordering is fine
+	while(!queue.isEmpty()) {
+		var a = queue.dequeue();
+		console.log(a);
+		resetCanvas(a);
+	}
 }
