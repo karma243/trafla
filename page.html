@@ -22,14 +22,14 @@
 		myHeading.textContent = 'Tower of Hanoi';
 
 		var depth = 490; var leftMost = 100; var rightMost = 1000; var height = 300; var unitLen = (rightMost - leftMost) / 14;
-		function fillCanvas () {
+		function fillCanvas (a) {
 			var ctx = document.getElementById("animation").getContext("2d");
 			ctx.beginPath();
 			ctx.lineWidth = 5;
 			drawTower(ctx, leftMost, rightMost, height, depth);
 			ctx.stroke();
 			ctx.closePath();
-			positionWeights(ctx, [0,0,0,0,0]);
+			positionWeights(ctx, a);
 		}
 
 		function clearCanvas () {
@@ -37,6 +37,9 @@
 			ctx.clearRect(0,0,1000,500)
 		}
 
+		/**
+		Draws three towers to shift the weights
+		*/
 		function drawTower (ctx, hor1, hor2, height, frameDepth) {
 			var h1 = hor1; h2 = h1+3*unitLen;
 			for (var i = 0; i < 3; i++) {
@@ -47,17 +50,10 @@
 			}
 		}
 
-/*		function addWeights (ctx, count) {
-			var xMid = leftMost + 1.5*unitLen;
-			var d = depth; var width = 2*unitLen; var h = 10;
-			for (var i = 0; i < count; i++) {
-				ctx.rect(xMid - width / 2, d - h, width, h);
-				d = d - h;
-				width = 0.8 * width;
-			}
-			ctx.stroke();
-		}
-*/
+		/*
+			reads position (index of tower) for each weight and locates each weight accordingly. 0th index is largest weight and last element
+			will be smallest weight
+		*/
 		function positionWeights (ctx, positions) {
 			var firstMid = leftMost + 1.5*unitLen;
 			var xMids = [firstMid, firstMid + 4*unitLen, firstMid + 8*unitLen];
@@ -81,14 +77,15 @@
 		will be using a queue. as soon as the user hits start, will start polling from queue
 		*/
 
-		function resetCanvas () {
+		function resetCanvas (a) {
 			clearCanvas();
-			fillCanvas();
+			fillCanvas(a);
 		}
 		
+		/*to change the text of button*/
 		function startExecution (el) {
 			if (el.innerHTML == 'Start') {
-				resetCanvas();
+				resetCanvas(zeroArray(3));
 				//startAnimation
 				el.innerHTML = 'Pause';
 			} else if (el.innerHTML == 'Pause') {
@@ -99,12 +96,14 @@
 				el.innerHTML = 'Pause';
 			}
 		}
-		/*var e = document.getElementById("form1");
-		var count = e.options[e.selectedIndex].text;
-		var myHeading1 = document.querySelector('h2');
-		myHeading1.textContent = count;*/
-		/*var prevValue = document.querySelector('button').textContent;
-		document.querySelector('h1').textContent = prevValue;*/
+
+		function zeroArray (length) {
+			var a = new Array(length);
+			for (var i = 0; i < a.length; i++) {
+				a[i] = 0;
+			};
+			return a;
+		}
 	</script>
 
 </body>
