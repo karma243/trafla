@@ -76,8 +76,11 @@ function resetCanvas (a) {
 /*to change the text of button*/
 function startExecution (el) {
 	if (el.innerHTML == 'Start') {
-		resetCanvas(zeroArray(readDropdown()));
+		var count = readDropdown();
+		var zeros = zeroArray(count)
+		resetCanvas(zeros);
 		//startAnimation
+		hanoi(count, 0, 2, 1, new Queue(), zeros);
 		el.innerHTML = 'Pause';
 	} else if (el.innerHTML == 'Pause') {
 		//resume animation
@@ -102,18 +105,23 @@ function readDropdown(argument) {
 	return parseInt(entry);
 }
 
-function hanoi (count, src, target, via, queue, array) {
+function hanoi (count, src, target, via, queue, a) {
+	console.log(a);
 	if (count == 0) return;
-	hanoi(count - 1, src, via, target);
-	move(src, target, queue, array);
-	hanoi(count - 1, via, target, src);
+	hanoi(count - 1, src, via, target, queue, a);
+	swap(src, target, a, queue);
+	hanoi(count - 1, via, target, src, queue, a);
 }
 
-function move (src, target, queue, array) {
-	for (var i = Things.length - 1; i >= 0; i--) {
-		if (array[i] == src) { //it means that the element is in src column
-			array[i] = target;
-			queue.enqueue(array.slice());
+function swap(src, target, a, queue) {
+	var millisecondsToWait = 500;
+	for (var i = a.length - 1; i >= 0; i--) {
+		if (a[i] == src) { //it means that the element is in src column
+			a[i] = target;
+			setTimeout(function() {
+    			resetCanvas(a.slice());
+			}, 2000);
+			queue.enqueue(a.slice());
 			break;
 		}
 	}
