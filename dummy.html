@@ -1,0 +1,26 @@
+<html>
+
+<head>
+<script type="text/javascript">function display(el)
+{
+	document.getElementById("demo").innerHTML=Date();
+	if (el.innerHTML == 'Show Date') {
+		el.innerHTML = 'Show Paragraph';
+	} else {
+		el.innerHTML = 'Show Date';
+	}
+}
+
+</script>
+</head>
+
+<body>
+<h1>My First Web Page</h1>
+<p id="demo">This is a paragraph.</p>
+<button type="button" onclick="display(this)">Show Date</button>
+
+<input onclick="display(this)" type="button" value="Show Date" id="button1" style="float: right"> </input>
+
+</body>
+
+</html>

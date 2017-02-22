@@ -1,0 +1,23 @@
+body {
+    background-color: powderblue;
+}
+h1 {
+    color: blue;
+    float: right;
+    margin-right: 900px;
+}
+p {
+    color: red;
+}
+
+#b01{
+	color: red;
+	float: right;
+	margin-right: 100px;
+}
+
+select {
+	color: blue;
+	float: left;
+	margin-left: 0px;
+}
