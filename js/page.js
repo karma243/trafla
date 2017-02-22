@@ -1,3 +1,4 @@
+//currently using this to keep all the scripts. not in use actively
 function setH1 () {
 	var myHeading = document.querySelector('h1');
 	myHeading.textContent = 'Tower of Hanoi';

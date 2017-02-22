@@ -21,16 +21,15 @@
 		var myHeading = document.querySelector('h1');
 		myHeading.textContent = 'Tower of Hanoi';
 
-		fillCanvas();
-	
+		var depth = 490; var leftMost = 100; var rightMost = 1000; var height = 300; var unitLen = (rightMost - leftMost) / 14;
 		function fillCanvas () {
 			var ctx = document.getElementById("animation").getContext("2d");
 			ctx.beginPath();
 			ctx.lineWidth = 5;
-			var depth = 490; var leftMost = 100; var rightMost = 1000; var height = 300;
 			drawTower(ctx, leftMost, rightMost, height, depth);
 			ctx.stroke();
 			ctx.closePath();
+			addWeights(ctx, 3);
 		}
 
 		function clearCanvas () {
@@ -39,23 +38,41 @@
 		}
 
 		function drawTower (ctx, hor1, hor2, height, frameDepth) {
-			var x = (hor2 - hor1) / 14;
-			var h1 = hor1; h2 = h1+3*x;
+			var h1 = hor1; h2 = h1+3*unitLen;
 			for (var i = 0; i < 3; i++) {
 				ctx.moveTo(h1, frameDepth); ctx.lineTo(h2, frameDepth);
 				var middlePoint = (h1 + h2) / 2;
 				ctx.moveTo(middlePoint, frameDepth); ctx.lineTo(middlePoint, frameDepth - height);
-				h1 = h2 + x; h2 = h1+3*x;
+				h1 = h2 + unitLen; h2 = h1+3*unitLen;
 			}
+		}
+
+		function addWeights (ctx, count) {
+			var xMid = leftMost + 1.5*unitLen;
+			var d = depth; var width = 2*unitLen; var h = 10;
+			for (var i = 0; i < count; i++) {
+				ctx.rect(xMid - width / 2, d - h, width, h);
+				d = d - h;
+				width = 0.8 * width;
+			}
+			ctx.stroke();
+		}
+
+		function resetCanvas () {
+			clearCanvas();
+			fillCanvas();
 		}
 		
 		function startExecution (el) {
 			if (el.innerHTML == 'Start') {
+				resetCanvas();
+				//startAnimation
 				el.innerHTML = 'Pause';
 			} else if (el.innerHTML == 'Pause') {
+				//resume animation
 				el.innerHTML = 'Resume';
 			} else {
-				fillCanvas();
+				//pause the animation
 				el.innerHTML = 'Pause';
 			}
 		}
