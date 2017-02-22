@@ -106,7 +106,6 @@ function readDropdown(argument) {
 }
 
 function hanoi (count, src, target, via, queue, a) {
-	console.log(a);
 	if (count == 0) return;
 	hanoi(count - 1, src, via, target, queue, a);
 	swap(src, target, a, queue);
@@ -118,11 +117,11 @@ function swap(src, target, a, queue) {
 	for (var i = a.length - 1; i >= 0; i--) {
 		if (a[i] == src) { //it means that the element is in src column
 			a[i] = target;
-			setTimeout(function() {
-    			resetCanvas(a.slice());
-			}, 2000);
+			//how to pause it here??
+			resetCanvas(a.slice());
 			queue.enqueue(a.slice());
 			break;
 		}
 	}
+	console.log(a) //will not print the first move
 }
