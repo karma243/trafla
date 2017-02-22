@@ -4,11 +4,13 @@
 	<title>Assignment Project - TOH</title>
 	<link rel="stylesheet" type="text/css" href="css/page.css">
 	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/Queue.js"> </script>
+	<script type="text/javascript" src="js/page.js"> </script>
 </head>
 <body>
 	<h1></h1>
 	<h2></h2>
-	<select autofocus="autofocus" id="form1">
+	<select autofocus="autofocus" id="dropdown">
 		<option value="3">Three</option>
 		<option value="4">Four</option>
 		<option value="5">Five</option>
@@ -17,9 +19,18 @@
 	<button type="button" onclick="startExecution(this)">Start</button>
 	<canvas id = "animation" width = "1000" height = "500" style="border:1px solid #000000;"></canvas>
 
+
 	<script type="text/javascript">
 		var myHeading = document.querySelector('h1');
 		myHeading.textContent = 'Tower of Hanoi';
+
+		//debugging tool
+		function setHeader (value) {
+			var myHeading = document.querySelector('h1');
+			myHeading.textContent = value;
+		}
+		
+		var queue = new Queue();
 
 		var depth = 490; var leftMost = 100; var rightMost = 1000; var height = 300; var unitLen = (rightMost - leftMost) / 14;
 		function fillCanvas (a) {
@@ -85,7 +96,9 @@
 		/*to change the text of button*/
 		function startExecution (el) {
 			if (el.innerHTML == 'Start') {
-				resetCanvas(zeroArray(3));
+				var e = document.getElementById("dropdown");
+				var entry = e.options[e.selectedIndex].value;
+				resetCanvas(zeroArray(parseInt(entry)));
 				//startAnimation
 				el.innerHTML = 'Pause';
 			} else if (el.innerHTML == 'Pause') {
@@ -104,6 +117,8 @@
 			};
 			return a;
 		}
+
+
 	</script>
 
 </body>

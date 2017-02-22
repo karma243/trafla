@@ -16,16 +16,16 @@ myHeading.textContent = 'Tower of Hanoi';
 
 fillCanvas();
 
-function fillCanvas () {
+function fillCanvas (a) {
 	var ctx = document.getElementById("animation").getContext("2d");
 	ctx.beginPath();
 	ctx.lineWidth = 5;
-	var depth = 490; var leftMost = 100; var rightMost = 1000; var height = 300;
 	drawTower(ctx, leftMost, rightMost, height, depth);
 	ctx.stroke();
 	ctx.closePath();
+	positionWeights(ctx, a);
 }
-
+		
 function clearCanvas () {
 	var ctx = document.getElementById("animation").getContext("2d");
 	ctx.clearRect(0,0,1000,500)
