@@ -76,6 +76,7 @@ function resetCanvas (a) {
 var queue = new Queue();
 function startExecution (el) {
 	if (el.innerHTML == 'Start') {
+		queue = new Queue();
 		var count = readDropdown();
 		var zeros = zeroArray(count)
 		resetCanvas(zeros);
