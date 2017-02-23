@@ -146,12 +146,12 @@ function dequeueAndShow (queue) {
 }
 
 //clear the last image and draw the new one
-var sleep = 500;
+var sleep = 1;
 function showElement(queue) {
 	var a = queue.dequeue();
 	console.log(a);
 	setTimeout(function() {resetCanvas(a)}, sleep);
-	sleep = sleep+500;
+	sleep = sleep+700;
 }
 
 function stopExecution() {
