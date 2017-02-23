@@ -145,10 +145,13 @@ function dequeueAndShow (queue) {
 	inturrpt = false;
 }
 
+//clear the last image and draw the new one
+var sleep = 500;
 function showElement(queue) {
 	var a = queue.dequeue();
 	console.log(a);
-	resetCanvas(a);
+	setTimeout(function() {resetCanvas(a)}, sleep);
+	sleep = sleep+500;
 }
 
 function stopExecution() {
@@ -159,15 +162,19 @@ function stopExecution() {
 
 
 async function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise(() => setTimeout(resolve("a"), ms));
 }
 
-function resolve() {
+function resolve(x) {
 	return "";
 }
 var paused = false;
 function pause() {
-	// await sleep(500);
+	try {
+		// await sleep(500);
+	} catch (e) {
+		console.log(e);
+	}
 	//pause (to ensure slow transition)
 	//keep checking for paused flag
 	//once it is false, release
