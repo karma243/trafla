@@ -73,6 +73,7 @@ function resetCanvas (a) {
 }
 
 /*to change the text of button*/
+var queue = new Queue();
 function startExecution (el) {
 	if (el.innerHTML == 'Start') {
 		var count = readDropdown();
@@ -80,12 +81,18 @@ function startExecution (el) {
 		resetCanvas(zeros);
 		el.innerHTML = 'Pause';
 		inturrpt = false;
-		executeHanoi(zeros, el);
+		executeHanoi(zeros, el, queue);
+		console.log(queue.isEmpty());
 	} else if (el.innerHTML == 'Pause') {
 		pause = true;
 		el.innerHTML = 'Resume';
+	} else if (el.innerHTML == 'Play') {
+		if (queue.getLength() != 0) {
+			showElement(queue);
+		} else {
+			el.innerHTML = 'Start';
+		}
 	} else { //innerHTML == 'Resume'
-
 		pause = false;
 		el.innerHTML = 'Pause';
 	}
@@ -106,12 +113,12 @@ function readDropdown(argument) {
 }
 
 //startAnimation
-function executeHanoi(zeros, el) {
-	var queue = new Queue();
+function executeHanoi(zeros, el, queue) {
 	queue.enqueue(zeros.slice());
 	hanoi(zeros.length, 0, 2, 1, queue, zeros);
-	dequeueAndShow(queue);
-	el.innerHTML = 'Start';
+	// dequeueAndShow(queue);
+	el.innerHTML = 'Play';
+	return queue;
 }
 //moves the blocks and pushesh each snapshot equivalent (an array) to the queue
 function hanoi (count, src, target, via, queue, a) {
@@ -139,7 +146,6 @@ function dequeueAndShow (queue) {
 	//todo: animation. tested with debugger, ordering is fine
 	while(!queue.isEmpty()) {
 		if (inturrpt) {break;};
-		pause();
 		showElement(queue);
 	}
 	inturrpt = false;
@@ -150,7 +156,7 @@ var sleep = 1;
 function showElement(queue) {
 	var a = queue.dequeue();
 	console.log(a);
-	setTimeout(function() {resetCanvas(a)}, sleep);
+	resetCanvas(a);
 	sleep = sleep+700;
 }
 
@@ -167,15 +173,4 @@ async function sleep(ms) {
 
 function resolve(x) {
 	return "";
-}
-var paused = false;
-function pause() {
-	try {
-		// await sleep(500);
-	} catch (e) {
-		console.log(e);
-	}
-	//pause (to ensure slow transition)
-	//keep checking for paused flag
-	//once it is false, release
 }
