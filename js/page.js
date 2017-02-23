@@ -1,4 +1,3 @@
-//currently using this to keep all the scripts. not in use actively
 function setH1 () {
 	var myHeading = document.querySelector('h1');
 	myHeading.textContent = 'Tower of Hanoi';
@@ -79,12 +78,8 @@ function startExecution (el) {
 		var count = readDropdown();
 		var zeros = zeroArray(count)
 		resetCanvas(zeros);
-		//startAnimation
-		var queue = new Queue();
-		queue.enqueue(zeros.slice());
-		hanoi(count, 0, 2, 1, queue, zeros);
-		dequeueAndShow(queue);
 		el.innerHTML = 'Pause';
+		executeHanoi(zeros, el);
 	} else if (el.innerHTML == 'Pause') {
 		//resume animation
 		el.innerHTML = 'Resume';
@@ -108,6 +103,15 @@ function readDropdown(argument) {
 	return parseInt(entry);
 }
 
+//startAnimation
+function executeHanoi(zeros, el) {
+	var queue = new Queue();
+	queue.enqueue(zeros.slice());
+	hanoi(zeros.length, 0, 2, 1, queue, zeros);
+	dequeueAndShow(queue);
+	el.innerHTML = 'Start';
+}
+//moves the blocks and pushesh each snapshot equivalent (an array) to the queue
 function hanoi (count, src, target, via, queue, a) {
 	if (count == 0) return;
 	hanoi(count - 1, src, via, target, queue, a);
@@ -127,11 +131,21 @@ function swap(src, target, a, queue) {
 	}
 }
 
+//to be fixed
+var inturrpt = false;
 function dequeueAndShow (queue) {
 	//todo: animation. tested with debugger, ordering is fine
 	while(!queue.isEmpty()) {
+		if (inturrpt) {break;};
 		var a = queue.dequeue();
 		console.log(a);
 		resetCanvas(a);
 	}
+	inturrpt = false;
+}
+
+function stopExecution() {
+	inturrpt = true;
+	document.getElementById("button1").innerHTML = "Start";
+	resetCanvas(zeroArray(readDropdown()));
 }

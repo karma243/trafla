@@ -8,23 +8,25 @@
 	<script type="text/javascript" src="js/page.js"> </script>
 </head>
 <body>
+	<table>
 	<h1></h1>
-	<h2></h2>
-	<select autofocus="autofocus" id="dropdown">
+	<select autofocus="autofocus" id="dropdown" onchange ="stopExecution()">
 		<option value="3">Three</option>
 		<option value="4">Four</option>
 		<option value="5">Five</option>
 	</select>
+	<button type="button" onclick="startExecution(this)" id="button1">Start</button>
 
-	<button type="button" onclick="startExecution(this)">Start</button>
+	</table>
+	
+
+
 	<canvas id = "animation" width = "1000" height = "500" style="border:1px solid #000000;"></canvas>
 
 
 	<script type="text/javascript">
 		var myHeading = document.querySelector('h1');
 		myHeading.textContent = 'Tower of Hanoi';
-		var queue = new Queue();
-
 	</script>
 
 </body>
