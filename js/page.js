@@ -79,12 +79,14 @@ function startExecution (el) {
 		var zeros = zeroArray(count)
 		resetCanvas(zeros);
 		el.innerHTML = 'Pause';
+		inturrpt = false;
 		executeHanoi(zeros, el);
 	} else if (el.innerHTML == 'Pause') {
-		//resume animation
+		pause = true;
 		el.innerHTML = 'Resume';
-	} else {
-		//pause the animation
+	} else { //innerHTML == 'Resume'
+
+		pause = false;
 		el.innerHTML = 'Pause';
 	}
 }
@@ -137,15 +139,36 @@ function dequeueAndShow (queue) {
 	//todo: animation. tested with debugger, ordering is fine
 	while(!queue.isEmpty()) {
 		if (inturrpt) {break;};
-		var a = queue.dequeue();
-		console.log(a);
-		resetCanvas(a);
+		pause();
+		showElement(queue);
 	}
 	inturrpt = false;
+}
+
+function showElement(queue) {
+	var a = queue.dequeue();
+	console.log(a);
+	resetCanvas(a);
 }
 
 function stopExecution() {
 	inturrpt = true;
 	document.getElementById("button1").innerHTML = "Start";
 	resetCanvas(zeroArray(readDropdown()));
+}
+
+
+async function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function resolve() {
+	return "";
+}
+var paused = false;
+function pause() {
+	// await sleep(500);
+	//pause (to ensure slow transition)
+	//keep checking for paused flag
+	//once it is false, release
 }
