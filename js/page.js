@@ -114,7 +114,6 @@ function readDropdown(argument) {
 
 //startAnimation
 function executeHanoi(zeros, el, queue) {
-	queue.enqueue(zeros.slice());
 	hanoi(zeros.length, 0, 2, 1, queue, zeros);
 	// dequeueAndShow(queue);
 	el.innerHTML = 'Play';
